@@ -32,57 +32,118 @@ DATA_DIR = "."
 # ============================================
 # ESTILOS CSS PERSONALIZADOS
 # ============================================
-st.markdown("""
-    <style>
-    body {
-        background-color: white; /* Fondo blanco */
-        margin: 0; /* Eliminar márgenes externos */
-        padding: 0; /* Eliminar relleno externo */
-    }
-    .main-title {
-        font-size: 2.8rem;
-        font-weight: 700;
-        background: linear-gradient(120deg, #1f77b4 0%, #2ca02c 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 0.5rem;
-    }
-    .subtitle {
-        font-size: 1.3rem;
-        color: #666;
-        margin-bottom: 2rem;
-    }
-    .metric-container {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        color: white;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .info-box {
-        background: #f0f2f6;
-        padding: 1.5rem;
-        border-radius: 10px;
-        border-left: 4px solid #1f77b4;
-    }
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        padding: 10px 20px;
-        background-color: #f0f2f6;
-        border-radius: 10px 10px 0 0;
-    }
-    img {
-        max-width: 100%; /* Asegura que las imágenes no excedan el ancho del contenedor */
-        height: auto; /* Mantiene la proporción de las imágenes */
-    }
-    .stImage {
-        margin: 0 auto; /* Centra las imágenes */
-    }
-    </style>
-""", unsafe_allow_html=True)
+
+# Selector de tema
+theme = st.session_state.get('theme', 'Claro')
+theme = st.radio('Tema:', ['Claro', 'Oscuro'], horizontal=True, key='theme_selector')
+st.session_state['theme'] = theme
+
+if theme == 'Oscuro':
+    st.markdown("""
+        <style>
+        body {
+            background-color: #181818;
+            color: #f0f0f0;
+        }
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #00c6fb 0%, #005bea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            color: #f0f0f0;
+            margin-bottom: 2rem;
+        }
+        .metric-container {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            color: #f0f0f0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .info-box {
+            background: #232526;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #00c6fb;
+            color: #f0f0f0;
+        }
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 8px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 10px 20px;
+            background-color: #232526;
+            border-radius: 10px 10px 0 0;
+            color: #f0f0f0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .stImage {
+            margin: 0 auto;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    plotly_template = 'plotly_dark'
+else:
+    st.markdown("""
+        <style>
+        body {
+            background-color: white;
+            color: #222;
+        }
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #1f77b4 0%, #2ca02c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .metric-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .info-box {
+            background: #f0f2f6;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #1f77b4;
+        }
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 8px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 10px 20px;
+            background-color: #f0f2f6;
+            border-radius: 10px 10px 0 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .stImage {
+            margin: 0 auto;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    plotly_template = 'plotly_white'
 
 # ============================================
 # FUNCIÓN PARA CARGAR DATOS
@@ -138,56 +199,46 @@ st.markdown('<p class="main-title">🌍 NO₂ y T21 (Incendios) en la Península
 st.markdown('<p class="subtitle">Análisis de datos satelitales mensuales - 2024</p>', unsafe_allow_html=True)
 
 # ============================================
-# SIDEBAR - CONTROLES
-# ============================================
-st.sidebar.header("📊 Panel de Control")
-
-# Selector de mes
+## CONTROLES SUPERIORES
 available_months = sorted(df['Fecha'].dt.strftime('%Y-%m').unique().tolist())
-selected_month = st.sidebar.selectbox(
-    "📅 Selecciona el mes:",
-    options=available_months,
-    index=len(available_months)-1
-)
-
-st.sidebar.markdown("---")
-
-# Métricas del mes seleccionado
-selected_data = df[df['Fecha'].dt.strftime('%Y-%m') == selected_month].iloc[0]
-
-st.sidebar.markdown("### 📈 Datos del Mes")
-st.sidebar.metric(
-    "NO₂ (Dióxido de Nitrógeno)",
-    f"{selected_data['NO2']:.2e} mol/m²"
-)
-st.sidebar.metric(
-    "T21 (Temperatura de Brillo)",
-    f"{selected_data['T21']:.1f} K"
-)
-
-# Calcular cambio respecto al mes anterior
-if len(df) > 1:
-    current_idx = df[df['Fecha'].dt.strftime('%Y-%m') == selected_month].index[0]
-    if current_idx > 0:
-        prev_no2 = df.iloc[current_idx - 1]['NO2']
-        prev_t21 = df.iloc[current_idx - 1]['T21']
-        delta_no2 = ((selected_data['NO2'] - prev_no2) / prev_no2) * 100
-        delta_t21 = selected_data['T21'] - prev_t21
-        
-        st.sidebar.markdown("### 📊 Cambio vs Mes Anterior")
-        st.sidebar.metric(
-            "Δ NO₂",
-            f"{delta_no2:+.1f}%",
-            delta=f"{delta_no2:+.1f}%"
+with st.container():
+    col1, col2, col3, col4 = st.columns([2,2,2,3])
+    with col1:
+        selected_month = st.selectbox(
+            "📅 Selecciona el mes:",
+            options=available_months,
+            index=len(available_months)-1
         )
-        st.sidebar.metric(
-            "Δ T21",
-            f"{delta_t21:+.1f} K",
-            delta=f"{delta_t21:+.1f} K"
+    selected_data = df[df['Fecha'].dt.strftime('%Y-%m') == selected_month].iloc[0]
+    with col2:
+        st.metric(
+            "NO₂ (Dióxido de Nitrógeno)",
+            f"{selected_data['NO2']:.2e} mol/m²"
         )
-
-st.sidebar.markdown("---")
-st.sidebar.info("💡 **Tip**: Usa las pestañas superiores para explorar diferentes visualizaciones")
+    with col3:
+        st.metric(
+            "T21 (Temperatura de Brillo)",
+            f"{selected_data['T21']:.1f} K"
+        )
+    with col4:
+        if len(df) > 1:
+            current_idx = df[df['Fecha'].dt.strftime('%Y-%m') == selected_month].index[0]
+            if current_idx > 0:
+                prev_no2 = df.iloc[current_idx - 1]['NO2']
+                prev_t21 = df.iloc[current_idx - 1]['T21']
+                delta_no2 = ((selected_data['NO2'] - prev_no2) / prev_no2) * 100
+                delta_t21 = selected_data['T21'] - prev_t21
+                st.metric(
+                    "Δ NO₂",
+                    f"{delta_no2:+.1f}%",
+                    delta=f"{delta_no2:+.1f}%"
+                )
+                st.metric(
+                    "Δ T21",
+                    f"{delta_t21:+.1f} K",
+                    delta=f"{delta_t21:+.1f} K"
+                )
+        st.info("💡 Usa las pestañas superiores para explorar diferentes visualizaciones", icon="ℹ️")
 
 # ============================================
 # TABS PRINCIPALES
@@ -435,8 +486,8 @@ with tab2:
         height=800,
         hovermode='x unified',
         showlegend=True,
-        template='plotly_white',
-        font=dict(size=12)
+        template=plotly_template,
+        font=dict(size=12, color='#f0f0f0' if theme=='Oscuro' else '#222')
     )
     
     st.plotly_chart(fig, use_container_width=True)
@@ -535,8 +586,9 @@ with tab3:
             xaxis_title='NO₂ - Densidad de columna (mol/m²)',
             yaxis_title='T21 - Temperatura de Brillo (K)',
             height=550,
-            template='plotly_white',
-            hovermode='closest'
+            template=plotly_template,
+            hovermode='closest',
+            font=dict(size=12, color='#f0f0f0' if theme=='Oscuro' else '#222')
         )
         
         st.plotly_chart(fig, use_container_width=True)

@@ -1,6 +1,6 @@
-# Dashboard NOâ‚‚ y T21 - Península de Yucatán
+# Dashboard NO2‚ y T21 - Península de Yucatán
 
-Dashboard interactivo para análisis de datos satelitales de dióxido de nitrógeno (NOâ‚‚) y temperatura de brillo (T21/incendios) en la Península de Yucatán.
+Dashboard interactivo para análisis de datos satelitales de dióxido de nitrógeno (NO2) y temperatura de brillo (T21/incendios) en la Península de Yucatán.
 
 ## Datos requeridos
 

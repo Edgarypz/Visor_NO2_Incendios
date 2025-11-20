@@ -34,31 +34,31 @@ DATA_DIR = "."
 # ============================================
 
 st.markdown("""
-    <style>
-    body {
-    background-color: #fff;
-    color: #111;
+<style>
+body {
+    background-color: #181818;
+    color: #fff;
     margin: 0;
     padding: 0;
 }
 .main-title {
     font-size: 3rem;
     font-weight: 700;
-    color: #111;
+    color: #fff;
     text-align: center;
     margin-bottom: 0.5rem;
 }
 .subtitle {
     font-size: 1.3rem;
-    color: #333;
+    color: #fff;
     text-align: center;
     margin-bottom: 2rem;
 }
 .metric-container {
-    background: #f7f7f7;
+    background: #222;
     padding: 1.2rem;
     border-radius: 15px;
-    color: #111;
+    color: #fff;
     text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     margin-bottom: 0.5rem;
@@ -68,14 +68,15 @@ st.markdown("""
 }
 .stTabs [data-baseweb="tab"] {
     padding: 10px 20px;
-    background-color: #f0f2f6;
+    background-color: #222;
     border-radius: 10px 10px 0 0;
-    color: #111;
+    color: #fff;
 }
 img.logo-img {
     max-height: 90px;
     width: auto;
     margin: 0 10px;
+    background: transparent;
 }
 .header-row {
     display: flex;
@@ -136,18 +137,15 @@ if error:
 # ============================================
 # ENCABEZADO
 # ============================================
-header_html = f'''
-<div class="header-row">
-    <img src="logo.jpg" class="logo-img" style="float:left;">
-    <div style="flex:1; text-align:center;">
-        <span class="main-title">🌍 NO₂ y T21 (Incendios) en la Península de Yucatán</span>
-        <div class="subtitle">Análisis de datos satelitales mensuales - 2024</div>
-    </div>
-</div>
-'''
-st.markdown(header_html, unsafe_allow_html=True)
+col_logo, col_title = st.columns([1, 5])
+with col_logo:
+    st.image("logo.jpg", use_column_width=True)
+with col_title:
+    st.markdown('<div class="main-title">🌍 NO₂ y T21 (Incendios) en la Península de Yucatán</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subtitle">Análisis de datos satelitales mensuales - 2024</div>', unsafe_allow_html=True)
 # ============================================
 ## CONTROLES SUPERIORES
+
 available_months = sorted(df['Fecha'].dt.strftime('%Y-%m').unique().tolist())
 st.markdown("<div style='display:flex; justify-content:center; margin-bottom:1rem;'>", unsafe_allow_html=True)
 selected_month = st.selectbox(
@@ -159,22 +157,26 @@ selected_month = st.selectbox(
 st.markdown("</div>", unsafe_allow_html=True)
 selected_data = df[df['Fecha'].dt.strftime('%Y-%m') == selected_month].iloc[0]
 
-metric_cols = st.columns(3)
-with metric_cols[0]:
+# Primera fila: métricas principales
+row1 = st.columns(2)
+with row1[0]:
     st.markdown('<div class="metric-container">', unsafe_allow_html=True)
     st.metric(
         "NO₂ (Dióxido de Nitrógeno)",
         f"{selected_data['NO2']:.2e} mol/m²"
     )
     st.markdown('</div>', unsafe_allow_html=True)
-with metric_cols[1]:
+with row1[1]:
     st.markdown('<div class="metric-container">', unsafe_allow_html=True)
     st.metric(
         "T21 (Temperatura de Brillo)",
         f"{selected_data['T21']:.1f} K"
     )
     st.markdown('</div>', unsafe_allow_html=True)
-with metric_cols[2]:
+
+# Segunda fila: métricas de cambio y tip
+row2 = st.columns(2)
+with row2[0]:
     if len(df) > 1:
         current_idx = df[df['Fecha'].dt.strftime('%Y-%m') == selected_month].index[0]
         if current_idx > 0:
@@ -194,7 +196,8 @@ with metric_cols[2]:
                 delta=f"{delta_t21:+.1f} K"
             )
             st.markdown('</div>', unsafe_allow_html=True)
-st.info("💡 Usa las pestañas superiores para explorar diferentes visualizaciones", icon="ℹ️")
+with row2[1]:
+    st.info("💡 Usa las pestañas superiores para explorar diferentes visualizaciones", icon="ℹ️")
 # ============================================
 # TABS PRINCIPALES
 # ============================================
@@ -441,8 +444,8 @@ with tab2:
         height=800,
         hovermode='x unified',
         showlegend=True,
-        template=plotly_template,
-        font=dict(size=12, color='#f0f0f0' if theme=='Oscuro' else '#222')
+        template='plotly_dark',
+        font=dict(size=12, color='#fff')
     )
     
     st.plotly_chart(fig, use_container_width=True)
@@ -541,9 +544,9 @@ with tab3:
             xaxis_title='NO₂ - Densidad de columna (mol/m²)',
             yaxis_title='T21 - Temperatura de Brillo (K)',
             height=550,
-            template=plotly_template,
+            template='plotly_dark',
             hovermode='closest',
-            font=dict(size=12, color='#f0f0f0' if theme=='Oscuro' else '#222')
+            font=dict(size=12, color='#fff')
         )
         
         st.plotly_chart(fig, use_container_width=True)

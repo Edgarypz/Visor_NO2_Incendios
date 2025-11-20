@@ -27,11 +27,7 @@ st.set_page_config(
 # CONFIGURACIÓN DE RUTAS DE DATOS
 # ============================================
 # Cambia esta ruta si guardaste los datos en otra carpeta:
-DATA_DIR = "C:/Users/usuario/Documents/ECODATA/TECHWEEK"
-  # Debe coincidir con OUTPUT_DIR del script de descarga
-
-# Si quieres usar la carpeta actual, usa:
-# DATA_DIR = "."
+DATA_DIR = "."
 
 # ============================================
 # ESTILOS CSS PERSONALIZADOS
@@ -705,3 +701,4 @@ st.markdown("""
     <p style="margin: 0; font-size: 0.9rem;">Península de Yucatán - Análisis Satelital 2024</p>
 </div>
 """, unsafe_allow_html=True)
+

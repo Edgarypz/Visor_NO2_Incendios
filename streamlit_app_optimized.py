@@ -163,22 +163,16 @@ def load_data():
         
         return df, metadata, None
     except FileNotFoundError as e:
-        error_msg = f"""
-        ⚠️ **Archivos no encontrados en: {os.path.abspath(DATA_DIR)}**
-        
-        Debes ejecutar primero el script de descarga:
-        
-        ```bash
-        python 01_download_data.py
-        ```
-        
-        Asegúrate de que DATA_DIR en app.py coincida con OUTPUT_DIR en 01_download_data.py
-        
-        Archivos esperados:
-        - {csv_path}
-        - {metadata_path}
-        - {os.path.join(DATA_DIR, 'monthly_images')}/
-        """
+        error_msg = (
+            f"⚠️ **Archivos no encontrados en: {os.path.abspath(DATA_DIR)}**\n\n"
+            "Debes ejecutar primero el script de descarga:\n\n"
+            "python 01_download_data.py\n\n"
+            "Asegúrate de que DATA_DIR en app.py coincida con OUTPUT_DIR en 01_download_data.py\n\n"
+            "Archivos esperados:\n"
+            f"- {csv_path}\n"
+            f"- {metadata_path}\n"
+            f"- {os.path.join(DATA_DIR, 'monthly_images')}/"
+        )
         return None, None, error_msg
 
 # ============================================

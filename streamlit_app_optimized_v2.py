@@ -84,6 +84,14 @@ img.logo-img {
     justify-content: flex-start;
     margin-bottom: 0.5rem;
 }
+/* Eliminar barra gris de widgets y columnas */
+.block-container, .stSelectbox, .stTextInput, .stColumn, .stMetric, .stInfo, .stTabs {
+    background-color: #181818 !important;
+    color: #fff !important;
+}
+.stSelectbox label, .stTextInput label {
+    color: #fff !important;
+}
 </style>
 """, unsafe_allow_html=True)
 

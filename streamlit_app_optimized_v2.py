@@ -241,7 +241,7 @@ with tab1:
             col1, col2 = st.columns(2)
             
             with col1:
-                st.markdown("#### 💨 NO₂ - Dióxido de Nitrógeno")
+                st.markdown("#### NO₂ - Dióxido de Nitrógeno")
                 img_path = image_dir / f"no2_{selected_month}.png"
                 if img_path.exists():
                     img = Image.open(img_path)
@@ -250,7 +250,7 @@ with tab1:
                     st.error(f"Imagen no disponible: {img_path.name}")
             
             with col2:
-                st.markdown("#### 🔥 T21 - Temperatura de Brillo (Incendios)")
+                st.markdown("#### T21 - Temperatura de Brillo (Incendios)")
                 img_path = image_dir / f"t21_{selected_month}.png"
                 if img_path.exists():
                     img = Image.open(img_path)
@@ -327,7 +327,7 @@ with tab1:
             st.markdown("---")
             
             if "NO₂" in layer_choice:
-                st.markdown("#### 💨 NO₂ - Dióxido de Nitrógeno")
+                st.markdown("#### NO₂ - Dióxido de Nitrógeno")
                 img_path = image_dir / f"no2_{selected_month}.png"
                 if img_path.exists():
                     img = Image.open(img_path)
@@ -335,7 +335,7 @@ with tab1:
                 else:
                     st.error(f"Imagen no disponible")
             else:
-                st.markdown("#### 🔥 T21 - Temperatura de Brillo (Incendios)")
+                st.markdown("#### T21 - Temperatura de Brillo (Incendios)")
                 img_path = image_dir / f"t21_{selected_month}.png"
                 if img_path.exists():
                     img = Image.open(img_path)

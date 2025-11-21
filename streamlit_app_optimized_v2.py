@@ -84,13 +84,18 @@ img.logo-img {
     justify-content: flex-start;
     margin-bottom: 0.5rem;
 }
-/* Eliminar barra gris de widgets y columnas */
-.block-container, .stSelectbox, .stTextInput, .stColumn, .stMetric, .stInfo, .stTabs {
+/* Eliminar fondo gris de widgets y métricas */
+.block-container, .stSelectbox, .stTextInput, .stColumn, .stMetric, .stInfo, .stTabs, .stApp, .st-emotion-cache-1r6slb0, .st-emotion-cache-1r6slb0, .st-emotion-cache-1r6slb0, .st-emotion-cache-1wmy9hl, .st-emotion-cache-1avcm0n, .st-emotion-cache-1r6slb0, .st-emotion-cache-1wmy9hl {
     background-color: #181818 !important;
     color: #fff !important;
 }
-.stSelectbox label, .stTextInput label {
+.stSelectbox label, .stTextInput label, .st-emotion-cache-1c7y2kd {
     color: #fff !important;
+}
+.st-emotion-cache-1c7y2kd, .st-emotion-cache-1avcm0n, .st-emotion-cache-1wmy9hl {
+    background-color: #181818 !important;
+    color: #fff !important;
+    border: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -170,7 +175,7 @@ row1 = st.columns(2)
 with row1[0]:
     st.markdown('<div class="metric-container">', unsafe_allow_html=True)
     st.metric(
-        "NO₂ (Dióxido de Nitrógen)",
+        "NO₂ (Dióxido de Nitrógeno)",
         f"{selected_data['NO2']:.2e} mol/m²"
     )
     st.markdown('</div>', unsafe_allow_html=True)

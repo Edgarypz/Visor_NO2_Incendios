@@ -170,7 +170,7 @@ row1 = st.columns(2)
 with row1[0]:
     st.markdown('<div class="metric-container">', unsafe_allow_html=True)
     st.metric(
-        "NO₂ (Dióxido de Nitrógeno)",
+        "NO₂ (Dióxido de Nitrógen)",
         f"{selected_data['NO2']:.2e} mol/m²"
     )
     st.markdown('</div>', unsafe_allow_html=True)
@@ -194,12 +194,12 @@ with row2[0]:
             delta_t21 = selected_data['T21'] - prev_t21
             st.markdown('<div class="metric-container">', unsafe_allow_html=True)
             st.metric(
-                "Δ NO₂",
+                "Cambio NO₂",
                 f"{delta_no2:+.1f}%",
                 delta=f"{delta_no2:+.1f}%"
             )
             st.metric(
-                "Δ T21",
+                "Cambio T21",
                 f"{delta_t21:+.1f} K",
                 delta=f"{delta_t21:+.1f} K"
             )
